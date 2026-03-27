@@ -4,10 +4,7 @@ import br.com.gestaofacil.apiHexagonal.adapters.in.controller.mapper.ClientMappe
 import br.com.gestaofacil.apiHexagonal.adapters.in.controller.request.ClientRequest;
 import br.com.gestaofacil.apiHexagonal.adapters.in.controller.response.ClientResponse;
 import br.com.gestaofacil.apiHexagonal.application.core.domain.Client;
-import br.com.gestaofacil.apiHexagonal.application.ports.in.FindAllClientsInputPort;
-import br.com.gestaofacil.apiHexagonal.application.ports.in.FindClientByIdInputPort;
-import br.com.gestaofacil.apiHexagonal.application.ports.in.InsertClientInputPort;
-import br.com.gestaofacil.apiHexagonal.application.ports.in.UpdateClientInputPort;
+import br.com.gestaofacil.apiHexagonal.application.ports.in.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +27,9 @@ public class ClientController {
 
     @Autowired
     private UpdateClientInputPort updateClientInputPort;
+
+    @Autowired
+    private DeleteClientInputPort deleteClientInputPort;
 
     @Autowired
     private ClientMapper clientMapper;
@@ -60,6 +60,12 @@ public class ClientController {
         Client client = clientMapper.toClient(clientRequest);
         client.setId(id);
         updateClientInputPort.updateClient(client);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteClient(@PathVariable final Long id) {
+        deleteClientInputPort.deleteClient(id);
         return ResponseEntity.noContent().build();
     }
 
