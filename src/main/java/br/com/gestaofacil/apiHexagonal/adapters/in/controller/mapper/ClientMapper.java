@@ -4,6 +4,7 @@ import br.com.gestaofacil.apiHexagonal.adapters.in.controller.request.ClientRequ
 import br.com.gestaofacil.apiHexagonal.adapters.in.controller.response.ClientResponse;
 import br.com.gestaofacil.apiHexagonal.application.core.domain.Client;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 

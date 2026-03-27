@@ -7,6 +7,7 @@ import br.com.gestaofacil.apiHexagonal.application.core.domain.Client;
 import br.com.gestaofacil.apiHexagonal.application.ports.in.FindAllClientsInputPort;
 import br.com.gestaofacil.apiHexagonal.application.ports.in.FindClientByIdInputPort;
 import br.com.gestaofacil.apiHexagonal.application.ports.in.InsertClientInputPort;
+import br.com.gestaofacil.apiHexagonal.application.ports.in.UpdateClientInputPort;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,10 @@ public class ClientController {
     private FindClientByIdInputPort findClientByIdInputPort;
 
     @Autowired
-    FindAllClientsInputPort findAllClientsInputPort;
+    private FindAllClientsInputPort findAllClientsInputPort;
+
+    @Autowired
+    private UpdateClientInputPort updateClientInputPort;
 
     @Autowired
     private ClientMapper clientMapper;
@@ -49,5 +53,14 @@ public class ClientController {
         return ResponseEntity.ok(clientMapper.toClientResponseList(findAllClientsInputPort.findAllClients()));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateClient(@PathVariable final Long id,
+                             @RequestBody ClientRequest clientRequest
+    ){
+        Client client = clientMapper.toClient(clientRequest);
+        client.setId(id);
+        updateClientInputPort.updateClient(client);
+        return ResponseEntity.noContent().build();
+    }
 
 }
