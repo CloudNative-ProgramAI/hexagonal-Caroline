@@ -27,6 +27,6 @@ public class SupplierEntity {
     private TipoSupplierEnum tipoSupplier;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id", referencedColumnName = "id")
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private AddressEntity address;
 }

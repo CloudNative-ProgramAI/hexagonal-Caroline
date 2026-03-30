@@ -8,7 +8,7 @@ public record SupplierResponse(
         String nomeFantasia,
         String email,
         String cnpj,
-        TipoSupplierEnum tipoFornecedor,
-        AddressDTO endereco
+        TipoSupplierEnum tipoSupplier,
+        AddressDTO address
 ) {
 }
