@@ -4,9 +4,7 @@ import br.com.gestaofacil.apiHexagonal.adapters.in.controller.mapper.SupplierMap
 import br.com.gestaofacil.apiHexagonal.adapters.in.controller.request.SupplierRequest;
 import br.com.gestaofacil.apiHexagonal.adapters.in.controller.response.SupplierResponse;
 import br.com.gestaofacil.apiHexagonal.application.core.domain.Supplier;
-import br.com.gestaofacil.apiHexagonal.application.ports.in.FindAllSuppliersInputPort;
-import br.com.gestaofacil.apiHexagonal.application.ports.in.FindSupplierByIdInputPort;
-import br.com.gestaofacil.apiHexagonal.application.ports.in.InsertSupplierInputPort;
+import br.com.gestaofacil.apiHexagonal.application.ports.in.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +26,9 @@ public class SupplierController {
     private FindSupplierByIdInputPort findSupplierByIdInputPort;
 
     @Autowired
+    private UpdateSupplierInputPort updateSupplierInputPort;
+
+    @Autowired
     private SupplierMapper supplierMapper;
 
 
@@ -46,6 +47,14 @@ public class SupplierController {
     @GetMapping("/{id}")
     public ResponseEntity<SupplierResponse> findSupplierById(@PathVariable final Long id) {
         return ResponseEntity.ok().body(supplierMapper.toSupplierResponse(findSupplierByIdInputPort.findSupplierById(id)));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateSupplier(@PathVariable final Long id, @RequestBody SupplierRequest supplierRequest) {
+        Supplier supplier = supplierMapper.toSupplier(supplierRequest);
+        supplier.setId(id);
+        updateSupplierInputPort.updateSupplier(supplier);
+        return ResponseEntity.noContent().build();
     }
 
 }
