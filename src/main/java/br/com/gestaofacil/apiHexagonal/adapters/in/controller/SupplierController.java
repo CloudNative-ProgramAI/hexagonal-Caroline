@@ -29,6 +29,9 @@ public class SupplierController {
     private UpdateSupplierInputPort updateSupplierInputPort;
 
     @Autowired
+    private DeleteSupplierInputPort deleteSupplierInputPort;
+
+    @Autowired
     private SupplierMapper supplierMapper;
 
 
@@ -54,6 +57,12 @@ public class SupplierController {
         Supplier supplier = supplierMapper.toSupplier(supplierRequest);
         supplier.setId(id);
         updateSupplierInputPort.updateSupplier(supplier);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSupplier(@PathVariable final Long id) {
+        deleteSupplierInputPort.deleteSupplier(id);
         return ResponseEntity.noContent().build();
     }
 
