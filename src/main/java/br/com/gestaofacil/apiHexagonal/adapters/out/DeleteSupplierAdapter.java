@@ -6,7 +6,7 @@ import br.com.gestaofacil.apiHexagonal.application.ports.out.DeleteSupplierOutpu
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("deleteSupplierAdapter")
 public class DeleteSupplierAdapter implements DeleteSupplierOutputPort {
 
     @Autowired
